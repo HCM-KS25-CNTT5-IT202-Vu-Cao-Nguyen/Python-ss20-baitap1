@@ -1,0 +1,66 @@
+Các nguyên tắc đã áp dụng
+Clean Code: tên biến rõ nghĩa (player_name, kills, deaths, assists)
+Single Responsibility: tách hàm calculate_kda()
+DRY: công thức KDA chỉ xuất hiện một lần
+Exception Handling: xử lý ZeroDivisionError, ValueError
+Fault Tolerance: lỗi một tuyển thủ không làm sập toàn bộ hệ thống
+Maintainability: dễ mở rộng và bảo trì hơn so với legacy code ban đầu.
+
+
+kda = (int(k) + int(a)) / int(d)
+
+Khi xử lý tuyển thủ ShowMaker:
+
+("ShowMaker", "15", "0", "10")
+
+Ta có:
+
+k = 15
+a = 10
+d = 0
+
+kda = (15 + 10) / 0
+
+Trong toán học cũng như Python, không thể chia cho 0.
+
+Do đó Python phát sinh Exception:
+
+ZeroDivisionError: division by zero
+
+Vì chương trình không có try...except để xử lý lỗi nên toàn bộ chương trình bị dừng ngay lập tức và không xử lý tiếp các tuyển thủ phía sau.
+
+
+Biến	Vấn đề
+ds	Không biết là gì
+x	Không biết chứa dữ liệu gì
+n	Viết tắt
+k	Viết tắt
+d	Viết tắt
+a	Viết tắt
+
+
+
+Lợi ích của việc tách hàm calculate_kda()
+
+Ví dụ:
+
+def calculate_kda(kills, deaths, assists):
+    return (kills + assists) / deaths
+Theo nguyên tắc DRY (Don't Repeat Yourself)
+Tránh lặp lại công thức
+
+Nếu nhiều nơi cùng tính KDA:
+
+(kills + assists) / deaths
+
+thì chỉ cần viết một lần trong hàm.
+
+Dễ bảo trì
+
+Nếu sau này ban tổ chức đổi công thức:
+
+KDA = (Kills + Assists) / max(1, Deaths)
+
+Ta chỉ sửa ở một nơi:
+
+calculate_kda()
